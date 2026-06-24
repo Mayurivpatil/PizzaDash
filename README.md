@@ -1,22 +1,34 @@
 # PizzaDash 🍕
 
-A premium, full-stack pizza ordering application featuring a highly interactive storefront design inspired by Zomato and a powerful, real-time administrative back-office kitchen display dashboard.
+A modern, high-performance Full-Stack Pizza Ordering System designed with an interactive, responsive UI inspired by top-tier food delivery platforms like Zomato. Features real-time order tracking, comprehensive category filtering, an elegant user onboarding workflow, and a standalone administrative back-office panel.
 
 ---
 
-## 🚀 Key Features
+## 🚀 Core Features
 
-* **Unified Premium Branding:** A cohesive visual identity shared across both client-facing and internal management tools utilizing responsive text-and-icon logo configurations.
-* **Dynamic Menu & Filtering:** Connected directly to the Forkify API to deliver instant category listings (`All`, `Cheesy`, `Veggie`, `Meat Lovers`) and search matching.
-* **Persistent Search History:** Saves up to 3 recent user inquiries natively inside browser `localStorage` for rapid recall.
-* **Full-Featured Basket Workflow:** Supports a real-time responsive sliding cart sidebar that handles multi-quantity edits, customer delivery form validation, and instant payment settlement handling (Cash or QR Code/UPI simulation).
-* **Live Fulfillment Stepper UI:** Animates processing milestones dynamically tracking placement from *Received ➔ Preparing ➔ On Way ➔ Delivered*.
-* **Unified Metrics Display Panel:** Admin view parses live records to provide analytical summaries (Total Orders vs. Actively Preparing Counters) alongside administrative override controls.
+### 1. Unified Brand Experience
+* **Polished Identity:** Features a cohesive visual theme across storefront interfaces and back-office platforms using a responsive text-and-icon vector combination.
+* **Smooth Interactivity:** Integrated micro-interactions (including animated hover-state transformations) for a fluid navigational feel.
+
+### 2. Streamlined Ordering Flow & Search
+* **Forkify API Integration:** Dynamic menus driven by real-time third-party recipe indexing.
+* **Smart Categorization:** Express options filtering via semantic tabs (`All`, `Cheesy`, `Veggie`, `Meat Lovers`).
+* **Local Persistence:** Remembers user search contexts directly via `localStorage` optimization.
+
+### 3. Order Management System & Live Tracking
+* **Flexible Cart Subsystems:** Dynamic state machine updating total bill aggregates and active piece quantities instantly.
+* **Dual Mode Settlement:** Support for straightforward Cash On Delivery (COD) workflows alongside simulated instant QR-code execution with reference mapping tracking.
+* **Live Stepper UI:** Visual progress progression showing order fulfillment states (*Received ➔ Preparing ➔ On Way ➔ Delivered*).
+
+### 4. Enterprise Admin Control Room
+* **Key Performance Indicators (KPIs):** Instant statistical aggregate calculations displaying totals versus non-delivered active order logs.
+* **Live Queue Monitors:** Structured tracking metrics breaking down target data variables including contact information, destination drop-offs, and breakdown fields.
+* **Operational Overrides:** Direct action-state triggers allowing staff to dynamically transition states or complete cycles globally.
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Technology Stack
 
-* **Frontend:** HTML5, CSS3 (Custom Variables, Flexbox, Grid), Vanilla JavaScript (ES6+, Fetch API), FontAwesome Library.
-* **Backend:** Node.js, Express.js.
-* **Database:** MySQL.
+* **Frontend:** HTML5, CSS3 Grid/Flexbox Layout architecture, JavaScript, FontAwesome Core Library.
+* **Backend engine:** Node.js, Express.js REST Framework.
+* **Data Tier:** MySQL Database.
