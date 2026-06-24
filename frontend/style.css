@@ -1,0 +1,250 @@
+:root {
+  --primary: #e23744; /* Zomato Red */
+  --dark: #1c1c1c;
+  --gray: #828282;
+  --light-bg: #f8f8f8;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+body {
+  background-color: var(--light-bg);
+  color: var(--dark);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 10%;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--primary);
+}
+.logo span {
+  color: var(--dark);
+}
+
+#cart-icon {
+  position: relative;
+  cursor: pointer;
+  font-size: 22px;
+}
+#cart-count {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+.hero {
+  height: 350px;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=1200");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.hero-content {
+  text-align: center;
+}
+.hero-content h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.container {
+  padding: 40px 10%;
+}
+.pizza-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
+}
+
+/* Card Styling */
+.card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.card-body {
+  padding: 15px;
+}
+.card-price {
+  color: var(--primary);
+  font-weight: bold;
+  font-size: 18px;
+}
+.add-btn {
+  float: right;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 350px;
+    height: 100%;
+    background: white;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    transform: translateX(100%);
+    transition: 0.4s;
+    z-index: 2000;
+    padding: 20px;
+    
+    /* Flex column setup */
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.active {
+    transform: translateX(0);
+}
+
+/* This is the container that will have the ONLY scrollbar */
+.sidebar-scroll-content {
+    flex: 1; 
+    overflow-y: auto; 
+    overflow-x: hidden;
+    padding-right: 5px; 
+    margin: 15px 0;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+#cart-items-list {
+  height: 70%;
+  overflow-y: auto;
+  padding: 20px 0;
+}
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #f9f9f9;
+  padding-bottom: 5px;
+}
+#checkout-btn {
+  width: 100%;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+}
+
+.add-btn {
+    transition: background 0.2s ease;
+}
+
+.add-btn:active {
+    transform: scale(0.95);
+}
+
+#history-sidebar .sidebar-header {
+    position: relative; /* Allows absolute positioning for the button */
+    display: flex;
+    justify-content: center; /* Centers the title */
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+#close-history {
+    position: absolute; /* Pulls it out of the flex flow */
+    right: 15px;       /* Pins it to the right */
+    top: 15px;         /* Pins it to the top */
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--dark);
+    transition: color 0.2s;
+}
+
+#close-history:hover {
+    color: var(--primary);
+}
+
+
+#upi-fields {
+    border: 1px dashed #e23744;
+    background-color: #fff5f5;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 10px;
+    text-align: center;
+    animation: fadeIn 0.3s ease-in;
+}
+
+#upi-fields img {
+    border: 4px solid white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin: 10px 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

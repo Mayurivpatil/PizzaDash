@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PizzaDash Admin | Dashboard</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<header>
+    <h1><i class="fa-solid fa-gauge"></i> PizzaDash Kitchen Display</h1>
+</header>
+
+<div class="container">
+    <div class="stats-bar">
+        <div class="stat-card">
+            <h3 id="total-count">0</h3>
+            <p style="font-size: 12px; color: #888;">Total Orders</p>
+        </div>
+        <div class="stat-card">
+            <h3 id="pending-count" style="color: #f39c12;">0</h3>
+            <p style="font-size: 12px; color: #888;">Preparing</p>
+        </div>
+    </div>
+
+    <div id="admin-orders"></div>
+</div>
+
+<script>
+    async function fetchOrders() {
+        try {
+            const res = await fetch("http://localhost:5000/api/orders");
+            const orders = await res.json();
+            
+            document.getElementById("total-count").innerText = orders.length;
+            document.getElementById("pending-count").innerText = orders.filter(o => o.status !== 'Delivered').length;
+
+            const ordersContainer = document.getElementById("admin-orders");
+            
+            if (orders.length === 0) {
+                ordersContainer.innerHTML = `<p style="text-align:center; color: #aaa; margin-top: 50px;">No incoming orders yet...</p>`;
+                return;
+            }
+
+            ordersContainer.innerHTML = orders.map(o => {
+                const statusClass = `status-${(o.status || 'Preparing').toLowerCase().replace(' ', '-')}`;
+                const isDelivered = o.status === 'Delivered';
+
+                return `
+                    <div class="order-card ${isDelivered ? 'delivered' : ''}">
+                        <div class="order-header">
+                            <span class="order-id">Order #${o.id}</span>
+                            <span class="status-badge ${statusClass}">${o.status || 'Preparing'}</span>
+                        </div>
+
+                        <div class="details-grid">
+                            <div class="info-box">
+                                <p><strong><i class="fa-solid fa-user"></i> Customer:</strong> ${o.customer_name}</p>
+                                <p><strong><i class="fa-solid fa-phone"></i> Contact:</strong> ${o.customer_phone || 'N/A'}</p>
+                                <p><strong><i class="fa-solid fa-location-dot"></i> Address:</strong> ${o.delivery_address || 'N/A'}</p>
+                                <p><strong><i class="fa-solid fa-money-bill"></i> Payment:</strong> ${o.payment_method}</p>
+                            </div>
+                            <div class="info-box" style="text-align: right;">
+                                <p>Total Bill</p>
+                                <p style="font-size: 20px; font-weight: bold; color: #e23744;">Rs.${parseFloat(o.total_price).toFixed(2)}</p>
+                            </div>
+                        </div>
+
+                        <div class="items-list">
+                            <strong>Order Items:</strong><br>
+                            ${o.items.map(item => `• ${item.quantity}x ${item.title}`).join('<br>')}
+                        </div>
+
+                        <div class="actions">
+                            <button class="btn btn-ship" onclick="updateStatus(${o.id}, 'On the Way')" ${o.status === 'On the Way' || isDelivered ? 'disabled' : ''}>
+                                <i class="fa-solid fa-motorcycle"></i> Out for Delivery
+                            </button>
+                            <button class="btn btn-deliver" onclick="updateStatus(${o.id}, 'Delivered')" ${isDelivered ? 'disabled' : ''}>
+                                <i class="fa-solid fa-check-double"></i> Mark Delivered
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        } catch (err) {
+            console.error("Fetch Error:", err);
+        }
+    }
+
+    async function updateStatus(id, newStatus) {
+        await fetch(`http://localhost:5000/api/order/${id}/status`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: newStatus }),
+        });
+        fetchOrders(); 
+    }
+
+    setInterval(fetchOrders, 60000);
+    fetchOrders();
+</script>
+</body>
+</html>

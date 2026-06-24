@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PizzaDash | Order Online</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">
+        <i class="fa-solid fa-pizza-slice logo-icon"></i> Pizza<span>Dash</span>
+      </div>
+      <div class="nav-tools" style="display: flex; align-items: center">
+        <div
+          id="history-icon"
+          style="margin-right: 20px; cursor: pointer; font-size: 20px"
+        >
+          <i class="fa-solid fa-clock-rotate-left"></i>
+        </div>
+        <div id="cart-icon">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span id="cart-count">0</span>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-content">
+        <h1>Best Pizza in Town</h1>
+        <p>Fresh ingredients, lightning fast delivery.</p>
+      </div>
+    </header>
+
+    <main class="container">
+      <h2>Popular Dishes</h2>
+      <div
+        class="search-container"
+        style="max-width: 1200px; margin: 20px auto; padding: 0 20px"
+      >
+        <input
+          type="text"
+          id="menu-search"
+          placeholder="Search for your favorite pizza..."
+          style="
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 25px;
+            border: 1px solid #ddd;
+            outline: none;
+            font-size: 16px;
+          "
+        />
+      </div>
+      <div
+        class="category-filter"
+        style="
+          max-width: 1200px;
+          margin: 0 auto 20px;
+          padding: 0 20px;
+          display: flex;
+          gap: 10px;
+          overflow-x: auto;
+          white-space: nowrap;
+        "
+      >
+        <button
+          class="filter-btn active"
+          onclick="filterByCategory('all', this)"
+          style="
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid #e23744;
+            background: #e23744;
+            color: white;
+            cursor: pointer;
+          "
+        >
+          All
+        </button>
+        <button
+          class="filter-btn"
+          onclick="filterByCategory('cheese', this)"
+          style="
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            background: #fff;
+            cursor: pointer;
+          "
+        >
+          Cheesy
+        </button>
+        <button
+          class="filter-btn"
+          onclick="filterByCategory('veggie', this)"
+          style="
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            background: #fff;
+            cursor: pointer;
+          "
+        >
+          Veggie
+        </button>
+        <button
+          class="filter-btn"
+          onclick="filterByCategory('meat', this)"
+          style="
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            background: #fff;
+            cursor: pointer;
+          "
+        >
+          Meat Lovers
+        </button>
+      </div>
+
+      <button
+        id="backToTop"
+        style="
+          position: fixed;
+          bottom: 80px;
+          right: 20px;
+          display: none;
+          background: #e23744;
+          color: white;
+          border: none;
+          border-radius: 50%;
+          width: 45px;
+          height: 45px;
+          cursor: pointer;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+          z-index: 999;
+        "
+      >
+        <i class="fa-solid fa-arrow-up"></i>
+      </button>
+      <div id="pizza-grid" class="pizza-grid"></div>
+    </main>
+
+    <div id="cart-sidebar" class="sidebar">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px 15px;
+          border-bottom: 1px solid #eee;
+        "
+      >
+        <button
+          id="clear-cart"
+          style="
+            background: none;
+            border: none;
+            color: #e23744;
+            cursor: pointer;
+            font-size: 12px;
+            text-decoration: underline;
+          "
+        >
+          Clear All
+        </button>
+        <h3 style="font-size: 18px">Your Basket</h3>
+        <button
+          id="close-cart"
+          style="
+            font-size: 28px;
+            background: none;
+            border: none;
+            cursor: pointer;
+          "
+        >
+          &times;
+        </button>
+      </div>
+
+      <div
+        class="sidebar-scroll-content"
+        style="flex: 1; overflow-y: auto; padding: 15px"
+      >
+        <div id="cart-items-list"></div>
+
+        <div
+          id="user-info-form"
+          style="
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            border: 1px solid #eee;
+          "
+        >
+          <h4
+            style="
+              margin-bottom: 12px;
+              font-size: 14px;
+              color: #333;
+              display: flex;
+              align-items: center;
+              gap: 8px;
+            "
+          >
+            <i class="fa-solid fa-truck"></i> Delivery Details
+          </h4>
+          <input
+            type="text"
+            id="cust-name"
+            placeholder="Full Name"
+            style="
+              width: 100%;
+              padding: 10px;
+              margin-bottom: 10px;
+              border: 1px solid #ddd;
+              border-radius: 6px;
+              box-sizing: border-box;
+            "
+          />
+          <input
+            type="text"
+            id="cust-phone"
+            placeholder="Phone Number"
+            style="
+              width: 100%;
+              padding: 10px;
+              margin-bottom: 10px;
+              border: 1px solid #ddd;
+              border-radius: 6px;
+              box-sizing: border-box;
+            "
+          />
+          <textarea
+            id="cust-address"
+            placeholder="Complete Delivery Address"
+            rows="3"
+            style="
+              width: 100%;
+              padding: 10px;
+              border: 1px solid #ddd;
+              border-radius: 6px;
+              font-family: inherit;
+              resize: none;
+              box-sizing: border-box;
+            "
+          ></textarea>
+        </div>
+
+        <div
+          id="payment-section"
+          style="
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 10px;
+          "
+        >
+          <h4 style="margin-bottom: 12px; font-size: 14px; color: #333">
+            <i class="fa-solid fa-credit-card"></i> Payment Method
+          </h4>
+
+          <div style="display: flex; gap: 10px; margin-bottom: 15px">
+            <label
+              style="
+                flex: 1;
+                text-align: center;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 12px;
+              "
+            >
+              <input
+                type="radio"
+                name="pay-method"
+                value="COD"
+                checked
+                onclick="toggleUPIFields(false)"
+              />
+              <div style="margin-top: 5px">Cash</div>
+            </label>
+
+            <label
+              style="
+                flex: 1;
+                text-align: center;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 12px;
+              "
+            >
+              <input
+                type="radio"
+                name="pay-method"
+                value="UPI"
+                onclick="toggleUPIFields(true)"
+              />
+              <div style="margin-top: 5px">UPI / QR</div>
+            </label>
+          </div>
+
+          <div
+            id="upi-fields"
+            style="
+              display: none;
+              text-align: center;
+              background: #fcfcfc;
+              padding: 15px;
+              border: 1px dashed #ccc;
+              border-radius: 8px;
+            "
+          >
+            <p style="font-size: 11px; color: #666; margin-bottom: 10px">
+              Scan QR to pay via any UPI App
+            </p>
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi://pay?pa=yourvpa@upi"
+              alt="QR Code"
+              style="
+                width: 120px;
+                border: 5px solid white;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+              "
+            />
+            <input
+              type="text"
+              placeholder="Enter Transaction ID"
+              style="
+                width: 100%;
+                padding: 8px;
+                margin-top: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 12px;
+              "
+            />
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="sidebar-footer"
+        style="padding: 15px; border-top: 1px solid #eee"
+      >
+        <div
+          class="total-row"
+          style="
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 18px;
+          "
+        >
+          <span>Total:</span>
+          <span id="grand-total">Rs. 0.00</span>
+        </div>
+        <button
+          id="checkout-btn"
+          style="
+            width: 100%;
+            background: #e23744;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+          "
+        >
+          Confirm Order
+        </button>
+      </div>
+    </div>
+
+    <div id="history-sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <h3>Order History</h3> 
+        <button id="close-history">&times;</button>
+      </div>
+      <div
+        id="history-list"
+        style="padding: 20px 0; overflow-y: auto; height: 85%"
+      ></div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
